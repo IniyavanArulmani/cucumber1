@@ -43,14 +43,32 @@ public class TariffPlanSteps {
 		driver.findElement(By.xpath("//input[@name='submit']")).click();
 	}
 
-
+	@When("User enter the tariff details {string},{string},{string},{string},{string},{string},{string}")
+	public void user_enter_the_tariff_details(String monthly, String local, String Intnl, String freeSMS, String LC, String IC, String SC) {
+		driver.findElement(By.xpath("(//a[text()='Add Tariff Plan'])[1]")).click();
+		driver.findElement(By.xpath("//input[@id='rental1']")).sendKeys(monthly);
+		driver.findElement(By.xpath("//input[@id='local_minutes']")).sendKeys(local);
+		driver.findElement(By.xpath("//input[@id='inter_minutes']")).sendKeys(Intnl);
+		driver.findElement(By.xpath("//input[@id='sms_pack']")).sendKeys(freeSMS);
+		driver.findElement(By.xpath("//input[@id='minutes_charges']")).sendKeys(LC);
+		driver.findElement(By.xpath("//input[@id='inter_charges']")).sendKeys(IC);
+		driver.findElement(By.xpath("//input[@id='sms_charges']")).sendKeys(SC);
+		driver.findElement(By.xpath("//input[@name='submit']")).click();
+	}
 	@Then("Check weather tariff added successfully.")
 	public void check_weather_tariff_added_successfully() {
 		WebElement d = driver.findElement(By.xpath("//h2[text()='Congratulation you add Tariff Plan']"));
 		String actual = d.getText();
 		boolean act = actual.contains("Congratulation");
 		Assert.assertTrue(act);
-	 
+	 driver.quit();
 	}
-
+	@Then("Check weather tariff added successfully at a time")
+	public void check_weather_tariff_added_successfully_at_a_time() {
+		WebElement d = driver.findElement(By.xpath("//h2[text()='Congratulation you add Tariff Plan']"));
+		String actual = d.getText();
+		boolean act = actual.contains("Congratulation");
+		Assert.assertTrue(act);
+	 driver.quit();
+	}
 }
