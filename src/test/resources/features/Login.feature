@@ -1,5 +1,5 @@
 Feature: Login Function
-
+@smoke
   Scenario: To check Add customer function by entering valid details
     Given User is on home page
     When User enter some valid details

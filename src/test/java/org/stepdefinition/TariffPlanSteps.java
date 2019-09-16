@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+
+
+import com.objectrepository.AddTariffPlan;
+import com.resources.BaseClass;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,45 +18,43 @@ import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 
 
-public class TariffPlanSteps {
-	static WebDriver driver;
+public class TariffPlanSteps extends BaseClass{
+	AddTariffPlan pom2=new AddTariffPlan();
 	@Given("User on home page")
 	public void user_on_home_page() {
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\SASIANAND\\eclipse-workspace\\Twitter\\drivers\\chromedriver_new.exe");
-		   driver=new ChromeDriver();
-		   driver.get("http://demo.guru99.com/telecom/index.html");  
+		 
 	}
 
 	@When("User enter the tariff details")
 	public void user_enter_the_tariff_details(DataTable twodlis) {
 		List<List<String>> li2 = twodlis.asLists(String.class);
-		driver.findElement(By.xpath("(//a[text()='Add Tariff Plan'])[1]")).click();
-		driver.findElement(By.xpath("//input[@id='rental1']")).sendKeys(li2.get(1).get(0));
-		driver.findElement(By.xpath("//input[@id='local_minutes']")).sendKeys(li2.get(1).get(1));
-		driver.findElement(By.xpath("//input[@id='inter_minutes']")).sendKeys(li2.get(1).get(2));
-		driver.findElement(By.xpath("//input[@id='sms_pack']")).sendKeys(li2.get(1).get(3));	
+		clickButton(pom2.getAddtariff());
+		fill(pom2.getRental(),(li2.get(1).get(0)));
+		fill(pom2.getLocalminutes(),(li2.get(1).get(1)));
+		fill(pom2.getInterminutes(),(li2.get(1).get(2)));
+		fill(pom2.getSmspack(),(li2.get(1).get(3)));	
 	}
 
 	@When("User enter the remaining tariff details")
 	public void user_enter_the_remaining_tariff_details(DataTable twodmap) {
 		List<Map<String, String>> ma2 = twodmap.asMaps(String.class,String.class);
-		driver.findElement(By.xpath("//input[@id='minutes_charges']")).sendKeys(ma2.get(2).get("LocalperCharge"));
-		driver.findElement(By.xpath("//input[@id='inter_charges']")).sendKeys(ma2.get(2).get("InternationalperCharge"));
-		driver.findElement(By.xpath("//input[@id='sms_charges']")).sendKeys(ma2.get(2).get("SMSperCharge"));
-		driver.findElement(By.xpath("//input[@name='submit']")).click();
+		fill(pom2.getMinutecharges(),(ma2.get(2).get("LocalperCharge")));
+		fill(pom2.getIntercharges(),(ma2.get(2).get("InternationalperCharge")));
+		fill(pom2.getSmscharges(),(ma2.get(2).get("SMSperCharge")));
+		clickButton(pom2.getSubmit());
 	}
 
 	@When("User enter the tariff details {string},{string},{string},{string},{string},{string},{string}")
 	public void user_enter_the_tariff_details(String monthly, String local, String Intnl, String freeSMS, String LC, String IC, String SC) {
-		driver.findElement(By.xpath("(//a[text()='Add Tariff Plan'])[1]")).click();
-		driver.findElement(By.xpath("//input[@id='rental1']")).sendKeys(monthly);
-		driver.findElement(By.xpath("//input[@id='local_minutes']")).sendKeys(local);
-		driver.findElement(By.xpath("//input[@id='inter_minutes']")).sendKeys(Intnl);
-		driver.findElement(By.xpath("//input[@id='sms_pack']")).sendKeys(freeSMS);
-		driver.findElement(By.xpath("//input[@id='minutes_charges']")).sendKeys(LC);
-		driver.findElement(By.xpath("//input[@id='inter_charges']")).sendKeys(IC);
-		driver.findElement(By.xpath("//input[@id='sms_charges']")).sendKeys(SC);
-		driver.findElement(By.xpath("//input[@name='submit']")).click();
+		clickButton(pom2.getAddtariff());
+		fill(pom2.getRental(),monthly);
+		fill(pom2.getLocalminutes(),local);
+		fill(pom2.getInterminutes(),Intnl);
+		fill(pom2.getSmspack(),freeSMS);
+		fill(pom2.getMinutecharges(),LC);
+		fill(pom2.getIntercharges(),IC);
+		fill(pom2.getSmscharges(),SC);
+		clickButton(pom2.getSubmit());
 	}
 	@Then("Check weather tariff added successfully.")
 	public void check_weather_tariff_added_successfully() {

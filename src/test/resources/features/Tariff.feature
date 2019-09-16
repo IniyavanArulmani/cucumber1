@@ -16,7 +16,7 @@ Feature: Tariff plan
       |              4 |                     15 |            1 |
       |              5 |                     18 |            2 |
     Then Check weather tariff added successfully.
-
+@smoke
   Scenario Outline: To Validate tariff plan is getting added for a customer
     When User enter the tariff details "<MontlyRental>","<FreeLocalMinutes>","<FreeInternationalMinutes>","<FreeSMS>","<LocalperCharge>","<InternationalperCharge>","<SMSperCharge>"
     Then Check weather tariff added successfully at a time
